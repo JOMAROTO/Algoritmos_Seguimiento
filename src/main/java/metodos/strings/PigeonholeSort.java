@@ -1,7 +1,6 @@
 package metodos.strings;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class PigeonholeSort {
@@ -10,9 +9,20 @@ public class PigeonholeSort {
             return;
         }
 
-        // Find the range of the strings
-        String min = Collections.min(titulos);
-        String max = Collections.max(titulos);
+        // Initialize min and max with the first element
+        String min = titulos.get(0);
+        String max = titulos.get(0);
+
+        // Find the range of the strings using a for-each loop
+        for (String titulo : titulos) {
+            if (titulo.compareTo(min) < 0) {
+                min = titulo;
+            }
+            if (titulo.compareTo(max) > 0) {
+                max = titulo;
+            }
+        }
+
         int range = max.compareTo(min) + 1;
 
         // Create pigeonholes
@@ -24,7 +34,11 @@ public class PigeonholeSort {
         // Place strings in their respective pigeonholes
         for (String titulo : titulos) {
             int index = titulo.compareTo(min);
-            pigeonholes.get(index).add(titulo);
+            if (index >= 0 && index < range) {
+                pigeonholes.get(index).add(titulo);
+            } else {
+                throw new IndexOutOfBoundsException("Index " + index + " out of bounds for range " + range);
+            }
         }
 
         // Collect the sorted strings

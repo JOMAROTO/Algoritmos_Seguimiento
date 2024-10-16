@@ -3,7 +3,7 @@ package metodos.strings;
 import java.util.List;
 
 public class SelectionSort {
-    public static void selectionSort(List<String> titulos) {
+    public void selectionSort(List<String> titulos) {
         int n = titulos.size();
         for (int i = 0; i < n - 1; i++) {
             int minIndex = i;
