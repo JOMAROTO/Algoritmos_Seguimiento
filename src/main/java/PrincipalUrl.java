@@ -15,7 +15,8 @@ public class PrincipalUrl {
         try (Connection conn = DriverManager.getConnection(url);
                 Statement stmt = conn.createStatement();
                 ResultSet rs = stmt
-                        .executeQuery("SELECT url FROM publicaciones WHERE url IS NOT NULL ORDER BY id_publicacion")) {
+                        .executeQuery(
+                                "SELECT REPLACE(REPLACE(url, CHAR(13), ''), CHAR(10), '') AS url FROM publicaciones WHERE url IS NOT NULL ORDER BY id_publicacion")) {
 
             while (rs.next()) {
                 urls.add(rs.getString("url"));
@@ -116,5 +117,8 @@ public class PrincipalUrl {
         endTime = System.currentTimeMillis();
         System.out.println("Tiempo de ejecución de RadixSort: " + (endTime - startTime) + " milisegundos");
 
+        for(String url : urlsPigeonhole) {
+            System.out.println(url);
+        }
     }
 }
